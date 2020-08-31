@@ -1,0 +1,50 @@
+{% extends 'events/base.html' %}
+{% block title %}Registrations{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="grid-container" style="width: 100%;background-color: #adb5bd">
+        <span class="grid-item"></span>
+        <span class="grid-item"></span>
+        <span class="grid-item" style="width: 100%;text-align: right;padding-right: 5px">
+        <a href="{% url 'events:export_csv' 1 %}"><img src="{% static 'events/xl.png' %}"
+                                                       alt="export to excel" data-toggle="tooltip"
+        title="export to excel"></a>
+    </span>
+    </div>
+    <div class="table-bordered" style="font-style: normal">
+        <table class="table-striped">
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Payment</th>
+            <th>Payment_Ref</th>
+            <th>Num Days</th>
+            <th>Num Guests</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Pickup</th>
+            <th>Travel Mode</th>
+            <th>Extended</th>
+            <th>Special Req</th>
+            <th>Mobile</th>
+            {% for reg in active_regs %}
+                <tr>
+                    <td>{{ reg.first_name}}</td>
+                    <td>{{ reg.last_name }}</td>
+                    <td>{{ reg.payment_amount }}</td>
+                    <td>{{ reg.payment_ref }}</td>
+                    <td>{{ reg.num_days }}</td>
+                    <td>{{ reg.num_guests }}</td>
+                    <td>{{ reg.arrival_date }}</td>
+                    <td>{{ reg.departure_date }}</td>
+                    <td>{{ reg.pickup_reqd }}</td>
+                    <td>{{ reg.mode_of_travel }}</td>
+                    <td>{{ reg.extended_tour }}</td>
+                    <td>{{ reg.special_req }}</td>
+                    <td>{{ reg.mobile }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+{% endblock %}

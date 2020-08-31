@@ -1,0 +1,26 @@
+{% extends 'events/base.html' %}
+{% block title %} Event Registration{% endblock %}
+{% block content %}
+
+    <div class="reverse-title">Registration for {{ event_name }} on
+        {{ event.event_date }} at {{ event.event_venue }} at this <a href="{{ event.event_link }}">resort</a></div>
+{#    <div>{% if is_registered %}#}
+{#        <!-- Do not allow deletion if current date is less than one week from date of event -->#}
+{#        Already registered! <span>Edit Registration</span> <span>Delete Registration</span>#}
+{#    {%  endif %}#}
+{#    </div>#}
+    <div style="color: #ff0000">{{ err }}</div>
+    <div style="margin-left: 10%">
+        <form action="{% url 'events:register' event.id %}" method="post">
+            <table>
+                {% csrf_token %}
+                {{ form.as_table }}
+            </table>
+            <span style="margin-left: 13%">
+                <input type="submit" value="Submit" class="button">
+            </span>
+        </form>
+    </div>
+
+
+{% endblock %}

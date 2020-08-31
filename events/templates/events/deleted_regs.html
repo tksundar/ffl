@@ -1,0 +1,47 @@
+{% extends 'events/base.html' %}
+{% load static %}{% block title %}Registrations{% endblock %}
+{% block content %}
+    <div class="grid-container" style="width: 100%;background-color: #adb5bd">
+        <span class="grid-item"></span>
+        <span class="grid-item"></span>
+        <span class="grid-item" style="width: 100%;text-align: right;padding-right: 5px">
+        <a href="{% url 'events:export_csv' 2 %}"><img src="{% static 'events/xl.png' %}" alt="export to excel"
+        data-toggle="tooltip"
+        title="export to excel"></a>
+    </span>
+    </div>
+    <div class="table-bordered" style="font-style: normal">
+        <table class="table-striped">
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Payment</th>
+            <th>Payment Ref</th>
+            <th>Num Guests</th>
+            <th>Num Days</th>
+            {% for r in deleted %}
+                <tr>
+                    <td>
+                        {{ r.first_name }}
+                    </td>
+                    <td>
+                        {{ r.last_name }}
+                    </td>
+                    <td>
+                        {{ r.payment_amount }}
+                    </td>
+                    <td>
+                        {{ r.payment_ref }}
+                    </td>
+                    <td>
+                        {{ r.num_guests }}
+                    </td>
+                    <td>
+                        {{ r.num_days }}
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </div>
+{% endblock %}

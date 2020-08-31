@@ -1,0 +1,50 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+.banner-right {
+    margin: auto;
+    color: white;
+    text-align: right;
+    background: #2196F3;
+    padding: 10px;
+}
+
+.reverse-title{
+    margin: auto;
+    width: 100%;
+    background: #b3d7ff;
+    color: #054570;
+    text-align: left;
+    padding: 10px;
+}
+.center-form {
+    width: 70%;
+    height: 60%;
+    text-align: center;
+    padding: 10px;
+    margin: auto}
+.center-table-form{
+     width: 70%;
+     height: 60%;
+     padding: 10px;
+     margin: 20%}
+
+
+.grid-container {
+  display: grid;
+    width: 100%;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  /*padding: 10px;*/
+    border: none;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
+
+    /*padding: 20px;*/
+    font-size: 15px;
+    width: 100%;
+}

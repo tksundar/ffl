@@ -1,0 +1,20 @@
+{% extends 'events/base.html' %}
+{% block title %} Index {% endblock %}
+{% block content %}
+    <div class="grid-container">
+
+     <div class="grid-item">left
+        <div class="reverse-title"><b>Forthcoming events</b>
+            <span style="margin-left: 50%"><a href="{% url 'events:upload' user.id %}">Upload Media</a></span>|
+        <span><a href="{% url 'events:registrations' user.id %}">view registrations</a> </span>
+        </div>
+
+     </div>
+     <div class="grid-item">Right
+
+
+
+     </div>
+    </div>
+
+{% endblock %}

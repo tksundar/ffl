@@ -1,0 +1,13 @@
+{% extends 'events/base.html' %}
+{% load django_tables2 %}
+{% load thumbnail %}
+{% block title %}Media-Thumbnail{% endblock %}
+{% block content %}
+    {% for id, im_url in files.items %}
+        {% thumbnail im_url "200x200" crop="center" as im %}
+            <a href="{% url 'events:show_media' id %}">
+                <img src="{{ im.url }}" height="{{ im.height }}" width="{{ im.width }}">
+            </a></a>
+        {% endthumbnail %}
+    {% endfor %}
+{% endblock %}

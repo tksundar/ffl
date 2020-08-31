@@ -1,0 +1,15 @@
+{% extends 'events/base.html' %}
+{% block title %} Stats{% endblock %}
+{% block content %}
+<div class="reverse-title">Registered Friends</div>
+<table class="table-striped" style="margin-left: 10%">
+<th>S.No</th><th>Name</th>
+                {% for id, name in stats.items %}
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td>{{ name }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+    </div>
+{% endblock %}

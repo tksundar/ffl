@@ -1,0 +1,11 @@
+{% extends 'events/base.html' %}
+{% block title %}Registration Confirmation {% endblock %}
+{% block content %}
+{#    <div class="banner-right">#}
+{#        <h5>REC 76-80 events Portal</h5>#}
+{#        <div style="color: white">{{ username }} logged in</div>#}
+{#    </div>#}
+    <div class="reverse-title">Thank you {{ username }}. Your registration
+        for event {{ event.event_name  }} is saved
+    </div>
+{% endblock %}

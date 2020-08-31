@@ -1,0 +1,9 @@
+.center {
+    margin: auto;
+    width: 50%;
+    height: 80%;
+    color: chartreuse;
+    text-align: center;
+    background: #054570;
+    padding: 10px;
+}
