@@ -168,7 +168,7 @@ LOGGING = {
             'propagate': True
         },
         'ffl': {
-            'handlers': ['file-ffl'],
+            'handlers': ['file-ffl', 'stream'],
             'level': 'INFO',
             'propagate': True
         }

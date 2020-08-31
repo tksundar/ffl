@@ -49,10 +49,12 @@ def login(request):
         return render(request, 'events/index.html', {'events': events, 'user': user, 'admin': admin})
     if request.POST:
         email = request.POST['email']
+        logger.debug('login attempt with email %s' % email)
+        print('login attempt with email %s' % email)
         try:
             _login = Login.objects.get(email__exact=email)
         except Login.DoesNotExist:
-            return render(request, 'events/new_user.html', {'err': ' Email not recognized. Please register'})
+            return render(request, 'events/new_user.html', {'err': 'Email not recognized. Please register'})
         _pwd = request.POST['pwd']
         check_if_password_change(request)
         pwd = _login.password
@@ -127,24 +129,21 @@ def validate_new_user(request):
     username = str(request.POST['username']).strip()
     pwd = str(request.POST['pwd']).strip()
     pwd1 = str(request.POST['pwd1']).strip()
-    err = None
+
     if login_present(request, username, email_id):
-        err = 'Either username or password is taken'
+        return 'Either username or password is taken'
 
     if len(username) < 3:
-        err = 'Valid username with 3 or more characters required'
+        return 'Valid username with 3 or more characters required'
 
-    if len(email_id) < 5:
-        err = 'Valid email with 5 or more characters required'
-
-    if pwd != pwd1:
-        err = 'password and confirm password do not match'
+    if len(email_id) < 8:
+        return 'Valid email with 8 or more characters required'
 
     if len(pwd) < 6:
-        err = 'password must have 6 or more characters'
+        return 'password must have 6 or more characters'
 
-    if err:
-        return err
+    if pwd != pwd1:
+        return 'password and confirm password do not match'
 
     return email_id, username, pwd
 
@@ -153,6 +152,8 @@ def new_user(request):
     if request.POST:
         val = validate_new_user(request)
         if isinstance(val, str):
+            print(val)
+            logger.error('error creating new user <%s>' % str(val))
             return render(request, 'events/new_user.html', {'err': val, 'user': None})
         email_id, username, pwd = val
         _login = Login()
@@ -160,7 +161,7 @@ def new_user(request):
         _login.password = make_password(pwd)
         _login.username = username
         _login.save()
-        logger.info('New User %s registered ' % _login.username)
+        logger.debug('New User %s registered ' % _login.username)
         request.session['email'] = _login.email
         request.session['user'] = _login.username
         return render(request, 'events/confirm.html', {'user': _login})

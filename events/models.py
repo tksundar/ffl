@@ -14,6 +14,11 @@ class Login(models.Model):
             'id': self.id,
         })
 
+    def create_login(self, data):
+        self.username = data['username']
+        self.email = data['email']
+        return self
+
 
 class Event(models.Model):
     event_name = models.CharField(max_length=25)
@@ -44,7 +49,6 @@ class Registration(models.Model):
     pickup_reqd = models.CharField(max_length=5)
     special_req = models.CharField(max_length=100)
     is_deleted = models.CharField(max_length=3, default='No')
-
 
     def __str__(self):
         return str(self.attributes())
