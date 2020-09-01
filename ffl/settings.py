@@ -153,7 +153,7 @@ LOGGING = {
             'formatter': 'simple',
 
         },
-        'file-ffl': {
+        'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
@@ -168,10 +168,13 @@ LOGGING = {
             'propagate': True
         },
         'ffl': {
-            'handlers': ['file-ffl', 'stream'],
+            'handlers': ['stream', 'file'],
             'level': 'INFO',
             'propagate': True
-        }
+        },
+        'root': {
+            'handlers': ('stream', 'file'),
+            'level': 'DEBUG'}
 
     }
 }

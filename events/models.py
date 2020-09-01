@@ -73,6 +73,8 @@ class Registration(models.Model):
         }
 
 
+
+
 class Registration_stats(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.CharField(max_length=10, default=None)
