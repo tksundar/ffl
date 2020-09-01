@@ -1,14 +1,10 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-}
+
 .banner-right {
-    margin: auto;
     color: white;
     text-align: right;
     background: #2196F3;
     padding: 10px;
+    font-size: 30px;
 }
 
 .reverse-title{

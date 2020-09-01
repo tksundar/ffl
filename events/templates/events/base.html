@@ -11,14 +11,14 @@
 </head>
 <body>
 {% if not user  %}
-    <div class="banner-right">
-        Friends for life events portal
+    <div class="banner-right" style="font-style: normal; font-size: x-large">
+       Events portal
     </div>
 {% else %}
-    <div class="banner-right">
-        Friends for life events portal<br>
-        <span><a href="{% url 'events:index' %}"><img src="{% static 'events/home.png' %}"></a> </span>
-        <span style="color: white;font-style: normal">&nbsp;
+    <div class="banner-right " style="font-style: normal; font-size: x-large">
+        Events portal<br>
+        <span style=><a href="{% url 'events:index'  %}"><img src="{% static 'events/home.png' %}"></a> </span>
+        <span style="color: white;font-size: small">&nbsp;
                 Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}" style="color: white">logout</a>
             </span>
     </div>
