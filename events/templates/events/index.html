@@ -5,8 +5,9 @@
         <span class="grid-item" style="padding-left: 7%;text-align: left">Forthcoming events</span>
         <span class="grid-item"></span>
         <span class="grid-item" style="text-align: right;margin-right: 10px;padding-right: 1%">
-                 <a href="{% url 'events:display_media' %}">view media</a>&nbsp;<span style="color:#adb5bd">|</span>
+                 <a href="{% url 'events:display_media' %}">view media</a>&nbsp;
             {% if admin %}
+                <span style="color:#adb5bd">|</span>
                 <a href="{% url 'events:upload' user.id %}">Upload Media</a>&nbsp;<span style="color: #adb5bd">|</span>
                 <a href="{% url 'events:registrations' user.id %}">View registrations</a>
                 <a href="{% url 'events:deleted_view' user.id %}">View Cancelled</a>
