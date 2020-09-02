@@ -26,7 +26,6 @@ class RegistrationForm(forms.Form):
     special_req = forms.CharField(widget=forms.TextInput)
 
 
-#
 class FileUploadForm(forms.Form):
     ev = Event.objects.all()
     choices = []

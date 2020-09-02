@@ -157,7 +157,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
-            'filename': '/home/dev/ffl/log/debug.log'
+            'filename': '/home/tksrajan/dev/ffl/log/debug.log'
 
         }
     },
