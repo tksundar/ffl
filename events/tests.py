@@ -1,12 +1,12 @@
-import sys
-
-from django.test import TestCase
-from django.test import Client
-from django.urls import reverse
-from django.utils import timezone
-from datetime import timedelta
 import logging
 import logging.handlers
+import sys
+from datetime import timedelta
+
+from django.test import Client
+from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
 
 from .models import Login, Event_Admin, Event
 

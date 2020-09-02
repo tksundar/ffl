@@ -1,5 +1,3 @@
-import django_tables2
-from .models import Registration
 #
 #
 # class RegTable(django_tables2.Table):

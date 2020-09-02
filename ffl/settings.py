@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# SECRET_KEY = 'vlg4y4x6q#w&$ssj--l1sf2+j#a^p-j!#!fvw7(l*a43crc+wf'
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'vlg4y4x6q#w&$ssj--l1sf2+j#a^p-j!#!fvw7(l*a43crc+wf'
+#SECRET_KEY = os.environ.get('SECRET_KEY')
 if os.getenv('DEBUG') == 'True':
     DEBUG = True
     THUMBNAIL_DEBUG = True
@@ -157,7 +157,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
-            'filename': 'c:/dev1/ffl/log/debug.log'
+            'filename': '/home/dev/ffl/log/debug.log'
 
         }
     },

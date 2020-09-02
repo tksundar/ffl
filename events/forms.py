@@ -1,5 +1,6 @@
 from django import forms
-from .models import File_uploads, Event, Registration
+
+from .models import Event
 
 
 class EventsDateInput(forms.DateTimeInput):
