@@ -35,7 +35,10 @@ else:
     FFL_DEBUG = False
 
 print('FFL_DEBUG  is set to %s' % FFL_DEBUG)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.100']
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
+                 '192.168.0.100',
+                 'ec2-13-232-233-180.ap-south-1.compute.amazonaws.com']
 
 # Application definition
 
