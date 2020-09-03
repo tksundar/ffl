@@ -160,7 +160,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
-            'filename': '/home/tksrajan/dev/ffl/log/debug.log'
+            'filename': os.environ.get('LOG_FILE_PATH')
 
         }
     },
