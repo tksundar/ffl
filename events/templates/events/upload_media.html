@@ -2,6 +2,8 @@
 {% block title %} Upload {% endblock %}
 {% block content %}
         <div class="reverse-title"><b>Upload Media</b></div>
+    <div>Uploading media for event {{ event.event_name }}</div>
+    <p></p>
     <div style="margin-left: 10%">
       <form method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table>

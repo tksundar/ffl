@@ -27,8 +27,11 @@ class RegistrationForm(forms.Form):
 
 
 class FileUploadForm(forms.Form):
-    event = forms.CharField(widget=forms.TextInput, disabled=True)
+    event = forms.HiddenInput
     file_url = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+
+
 
 # class FileUploadForm(forms.ModelForm):
 #     class Meta:

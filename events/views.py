@@ -402,8 +402,10 @@ def get_event(event_id):
 def upload(request, event_id):
     login_ = create_user(request)
     event = Event.objects.get(pk=event_id)
+    print(event)
     if request.POST:
         form = FileUploadForm(request.POST, request.FILES)
+        print(form)
         files = request.FILES.getlist('file_url')
         if form.is_valid():
             for f in files:
@@ -411,7 +413,10 @@ def upload(request, event_id):
                 file.file_url = f
                 file.event = event
                 file.save()
-        return render(request, 'events/upload_success.html', {'user': login_})
+            return render(request, 'events/upload_success.html', {'user': login_})
+        else:
+            logger.error(form.errors)
+            raise Http404('Upload failed.Contact administrator')
     else:
         form = FileUploadForm(initial={'event': event.event_name})
         logger.debug(form)
