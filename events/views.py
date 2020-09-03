@@ -299,7 +299,7 @@ def register(request, event_id):
             else:
                 err = 'Either dates are not valid or number of guests or number of days is invalid.'
                 logger.error(err)
-                print('>>>>>>>>>>>>>>>>>>>>'+err)
+                print('>>>>>>>>>>>>>>>>>>>>' + err)
                 context = {'user': create_user(request), 'form': form, 'event': event, 'err': err}
                 return render(request, 'events/registration.html', context)
         else:
@@ -375,9 +375,9 @@ def delete(request, reg_id):
     return render(request, 'events/delete_confirmation.html', context)
 
 
-def deleted_view(request, user_id):
-    login_ = Login.objects.get(pk=user_id)
-    deleted = Registration.objects.filter(is_deleted='Yes')
+def deleted_view(request, event_id):
+    login_ = create_user(request)
+    deleted = Registration.objects.filter(is_deleted='Yes',event_id=event_id)
     return render(request, 'events/deleted_regs.html', {'deleted': deleted, 'user': login_})
 
 
@@ -393,20 +393,19 @@ def stats(request, event_id):
     return render(request, 'events/stats.html', context)
 
 
-def get_event(event_name):
+def get_event(event_id):
     try:
-        return Event.objects.get(event_name__exact=event_name)
+        return Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
         return None
 
 
-def upload(request, user_id):
-    login_ = Login.objects.get(pk=user_id)
+def upload(request, event_id):
+    login_ = create_user(request)
+    event = Event.objects.get(pk=event_id)
     if request.POST:
         form = FileUploadForm(request.POST, request.FILES)
         files = request.FILES.getlist('file_url')
-        event_name = request.POST['event']
-        event = get_event(event_name)
         if form.is_valid():
             for f in files:
                 file: File_uploads = File_uploads()
@@ -415,19 +414,20 @@ def upload(request, user_id):
                 file.save()
         return render(request, 'events/upload_success.html', {'user': login_})
     else:
-        form = FileUploadForm()
+        form = FileUploadForm(initial={'event': event.event_name})
+        logger.debug(form)
         return render(request, 'events/upload_media.html',
-                      {'form': form, 'user': login_})
+                      {'form': form, 'user': login_, 'event': event})
 
 
-def registrations(request, user_id):
+def registrations(request, event_id):
     login_ = create_user(request)
-    active_regs = Registration.objects.exclude(is_deleted='Yes')
+    active_regs = Registration.objects.filter(is_deleted='No', event_id=event_id)
     return render(request, 'events/registrations.html', {'user': login_, 'active_regs': active_regs})
 
 
-def display_media(request):
-    uploaded_files = File_uploads.objects.all()
+def display_media(request, event_id):
+    uploaded_files = File_uploads.objects.filter(event_id=event_id)
     file_dict = {}
     for file in uploaded_files:
         file_dict[file.id] = file.file_url
@@ -447,7 +447,7 @@ def show_media(request, image_id):
     return render(request, 'events/show_media.html', context)
 
 
-def delete_media(request):
+def delete_media(request, event_id):
     files = File_uploads.objects.all()
     for file in files:
         file.delete()

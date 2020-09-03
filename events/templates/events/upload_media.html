@@ -3,7 +3,7 @@
 {% block content %}
         <div class="reverse-title"><b>Upload Media</b></div>
     <div style="margin-left: 10%">
-      <form method="POST" action="{% url 'events:upload' user.id %}" enctype="multipart/form-data">
+      <form method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table>
         {% csrf_token %}
         {{ form.as_table }}

@@ -27,12 +27,7 @@ class RegistrationForm(forms.Form):
 
 
 class FileUploadForm(forms.Form):
-    ev = Event.objects.all()
-    choices = []
-    for e in ev:
-        t = (e.event_name, e.event_name)
-        choices.append(t)
-    event = forms.ChoiceField(choices=choices, widget=forms.Select)
+    event = forms.CharField(widget=forms.TextInput, disabled=True)
     file_url = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
 # class FileUploadForm(forms.ModelForm):

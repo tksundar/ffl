@@ -11,23 +11,25 @@
         title="export to excel"></a>
     </span>
     </div>
-    <div class="table-bordered" style="font-style: normal">
+    <div class="table-bordered" style="font-size: small;text-align: center">
         <table class="table-striped">
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Payment</th>
-            <th>Payment_Ref</th>
-            <th>Num Days</th>
-            <th>Num Guests</th>
-            <th>Arrival</th>
-            <th>Departure</th>
-            <th>Pickup</th>
-            <th>Travel Mode</th>
-            <th>Extended</th>
-            <th>Special Req</th>
-            <th>Mobile</th>
+        <tr style="background-color: dimgray;color: white">
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Payment</td>
+            <td>Payment_Ref</td>
+            <td>Num Days</td>
+            <td>Num Guests</td>
+            <td>Arrival</td>
+            <td>Departure</td>
+            <td>Pickup</td>
+            <td>Travel Mode</td>
+            <td>Extended</td>
+            <td>Special Req</td>
+            <td>Mobile</td>
+        </tr>
             {% for reg in active_regs %}
-                <tr>
+                <tr style="font-size: small">
                     <td>{{ reg.first_name}}</td>
                     <td>{{ reg.last_name }}</td>
                     <td>{{ reg.payment_amount }}</td>
