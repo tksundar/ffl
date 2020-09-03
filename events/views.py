@@ -188,7 +188,7 @@ def new_user(request):
         _login.save()
         logger.debug('New User %s registered ' % _login.username)
         request.session['email'] = _login.email
-        request.session['user'] = _login.username
+        request.session['username'] = _login.username
         return render(request, 'events/confirm.html', {'user': _login})
     else:
         return render(request, 'events/new_user.html', {'err': '', 'user': None})
@@ -209,7 +209,6 @@ def set_initial(reg_form, event, email):
         'event': event.event_name,
         'num_of_guests': '1',
         'num_of_days': '2',
-        'arrival_date': event.event_date,
         'email': email,
         'special_req': 'None'
     }
@@ -322,7 +321,7 @@ def register(request, event_id):
                 context['event'] = event
                 return render(request, 'events/detail.html', context)
         except Registration.DoesNotExist:
-            reg_form = RegistrationForm()
+            reg_form = RegistrationForm(initial={'arrival_date': event.event_date})
             set_initial(reg_form, event, user.email)
             context = {'user': create_user(request), 'form': reg_form, 'event': event}
             return render(request, 'events/registration.html', context)
@@ -377,7 +376,7 @@ def delete(request, reg_id):
 
 def deleted_view(request, event_id):
     login_ = create_user(request)
-    deleted = Registration.objects.filter(is_deleted='Yes',event_id=event_id)
+    deleted = Registration.objects.filter(is_deleted='Yes', event_id=event_id)
     return render(request, 'events/deleted_regs.html', {'deleted': deleted, 'user': login_})
 
 
