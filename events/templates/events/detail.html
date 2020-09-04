@@ -1,12 +1,8 @@
 {% extends 'events/base.html' %}
 {% block title %} Event Registration{% endblock %}
 {% block content %}
-    {#    <div class="banner-right">#}
-    {#        <h5>REC 76-80 events Portal</h5>#}
-    {#        <div style="color: white;font-style: normal"> {{ username }} logged in</div>#}
-    {#    </div>#}
     {% if not message %}
-        <div style="background-color: #b3d7ff;width: 100%;text-align: center">
+        <div style=" width:100%;background-color: #b3d7ff;text-align: center">
             <span>Already registered!. Details are given below.</span>
             <span>
             <a href="{% url 'events:edit' registration.id %}">Edit</a>&nbsp;

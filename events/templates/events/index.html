@@ -4,7 +4,7 @@
     <div style="background-color: #b3d7ff">
         <span style="text-align: left">Forthcoming events</span>
     </div>
-
+    {% if events %}
     <div style="text-align: center;">
 
         <table class="table-bordered" style="display: inline-flex;font-size: small">
@@ -23,7 +23,7 @@
                 <td>Cancellations</td>
              </tr>
             {% endif %}
-            {% if events %}
+
                 {% for event in events %}
                     <tr>
                         <td data-toggle="tooltip" title="click to register"><a

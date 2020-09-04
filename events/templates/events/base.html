@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=No">
     {% load static %}
     <script type="application/javascript" src="{% static 'events/validations.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'events/simple.css' %}">
@@ -9,20 +9,20 @@
 
     <title>{% block title %}<!-- -->{% endblock %}</title>
 </head>
-<body>
+<body style="width: 100%;height: 100%">
 {% if not user  %}
 {#    <div class="banner-right" style="font-style: normal; font-size: medium">#}
-    <div style="font-style: normal; font-size: medium;background-color: #2196F3;color: white;text-align: right">
-
-       Events portal
+    <div style=" width: 100%;font-style: normal; font-size: medium;background-color: #2196F3;color: white; text-align: right">
+        <span style="margin-right: 2%">Events portal</span>
     </div>
 {% else %}
-    <div style="font-style: normal; font-size: medium;background-color: #2196F3;color: white;text-align: right">
-        Events portal<br>
-        <span style="text-align: right"><a href="{% url 'events:index'  %}"><img src="{% static 'events/home.png' %}"></a> </span>
-        <span style="color: white;font-size: small">&nbsp;
-                Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}" style="color: white">logout</a>
-            </span>
+    <div style=" width: 100%;font-style: normal; font-size: medium;background-color: #2196F3;color: white; text-align: right">
+        <span style="margin-right: 2%">Events portal</span>
+        <br>
+        <span style="margin-right: 2%;font-size: small">
+            <a href="{% url 'events:index'  %}"><img src="{% static 'events/home.png' %}"></a>
+             Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}" style="color: white">logout</a>
+        </span>
     </div>
 {% endif %}
 {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}

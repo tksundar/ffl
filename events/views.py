@@ -406,7 +406,7 @@ def upload(request, event_id):
     if request.POST:
         form = FileUploadForm(request.POST, request.FILES)
         print(form)
-        files = request.FILES.getlist('file_url')
+        files = request.FILES.getlist('files')
         if form.is_valid():
             for f in files:
                 file: File_uploads = File_uploads()

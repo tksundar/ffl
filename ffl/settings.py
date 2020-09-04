@@ -140,6 +140,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -160,7 +161,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
-            'filename': os.environ.get('LOG_FILE_PATH')
+            'filename': '/home/ubuntu/dev/ffl/log/debug.log'
 
         }
     },
