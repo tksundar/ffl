@@ -1,23 +1,13 @@
 {% extends 'events/base.html' %}
 {% block title %} Index {% endblock %}
 {% block content %}
-    <div class="grid-container" style="width: 100%">
-        <span class="grid-item" style="padding-left: 7%;text-align: left">Forthcoming events</span>
-        <span class="grid-item" style="text-align: right;margin-right: 10px;padding-right: 1%"></span>
-        <span class="grid-item"></span>
-{#        <span class="grid-item" style="text-align: right;margin-right: 10px;padding-right: 1%">#}
-{#                 <a href="{% url 'events:display_media' %}">view media</a>&nbsp;#}
-{#            {% if admin %}#}
-{#                <span style="color:#adb5bd">|</span>#}
-{#                <a href="{% url 'events:registrations' event.id %}">View registrations</a>#}
-{#                <a href="{% url 'events:deleted_view' event.id %}">View Cancelled</a>#}
-{#            {% endif %}#}
-{#             </span>#}
-
+    <div style="background-color: #b3d7ff">
+        <span style="text-align: left">Forthcoming events</span>
     </div>
 
-    <div style="margin-left: 20px">
-        <table class="table-bordered" style="text-align: center;font-size: small">
+    <div style="text-align: center;">
+
+        <table class="table-bordered" style="display: inline-flex;font-size: small">
         <tr style="font-size: larger;font-weight:revert;color:white;background-color: dimgray" >
             <td>Name</td>
             <td>Venue</td>

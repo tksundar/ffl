@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = 'vlg4y4x6q#w&$ssj--l1sf2+j#a^p-j!#!fvw7(l*a43crc+wf'
-#SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 if os.getenv('DEBUG') == 'True':
     DEBUG = True
     THUMBNAIL_DEBUG = True
@@ -34,11 +34,11 @@ else:
     THUMBNAIL_DEBUG = False
     FFL_DEBUG = False
 
-print('FFL_DEBUG  is set to %s' % FFL_DEBUG)
-ALLOWED_HOSTS = ['127.0.0.1',
-                 'localhost',
-                 '192.168.0.100',
-                 'ec2-13-232-233-180.ap-south-1.compute.amazonaws.com']
+
+ALLOWED_HOSTS = ['ec2-13-232-233-180.ap-south-1.compute.amazonaws.com']
+
+if os.environ.get('DEBUG'):
+    ALLOWED_HOSTS += ['localhost']
 
 # Application definition
 
@@ -181,3 +181,4 @@ LOGGING = {
 
     }
 }
+print('DEBUG is set to %s' % FFL_DEBUG)

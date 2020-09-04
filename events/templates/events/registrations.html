@@ -2,17 +2,13 @@
 {% block title %}Registrations{% endblock %}
 {% load static %}
 {% block content %}
-    <div class="grid-container" style="width: 100%;background-color: #adb5bd">
-        <span class="grid-item"></span>
-        <span class="grid-item"></span>
-        <span class="grid-item" style="width: 100%;text-align: right;padding-right: 5px">
-        <a href="{% url 'events:export_csv' 1 %}"><img src="{% static 'events/xl.png' %}"
+    <div style="width: 100%;background-color: #b3d7ff;text-align: right">
+        <a href="{% url 'events:export_csv' 1 %}"><img src="{% static 'events/Excel-icon_25.png' %}"
                                                        alt="export to excel" data-toggle="tooltip"
         title="export to excel"></a>
-    </span>
     </div>
     <div class="table-bordered" style="font-size: small;text-align: center">
-        <table class="table-striped">
+        <table class="table-striped" style="display:inline-block;">
         <tr style="background-color: dimgray;color: white">
             <td>First Name</td>
             <td>Last Name</td>

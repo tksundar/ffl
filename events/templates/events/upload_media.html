@@ -4,13 +4,13 @@
         <div class="reverse-title"><b>Upload Media</b></div>
     <div>Uploading media for event {{ event.event_name }}</div>
     <p></p>
-    <div style="margin-left: 10%">
+    <div style="text-align: left">
       <form method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table>
         {% csrf_token %}
         {{ form.as_table }}
-              </table>
-        <button style="margin-left: 7%" type="submit" class="button">Save</button>
+          </table>
+        <button style="display: inline-block;margin-left: 7%" type="submit" class="button">Save</button>
     </form>
     </div>
 {% endblock %}
