@@ -4,7 +4,7 @@ import logging
 import random
 import string
 from datetime import timedelta
-
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import Http404
@@ -30,10 +30,11 @@ def check_if_password_change(request):
         return render(request, 'events/new_user.html', {'err': 'No such user. Please register'})
 
 
-def check_user_is_event_admin(user):
+def check_user_is_event_admin(user, event_id):
     try:
         if user:
-            return Event_Admin.objects.get(admin__in=user.username)
+            admins = Event_Admin.objects.get(Q(admin=user.username), Q(event_id=event_id))
+            return admins
     except Event_Admin.DoesNotExist:
         return None
 
@@ -63,8 +64,7 @@ def login(request):
         if isinstance(ret_val, Login):
             request.session['username'] = ret_val.username
             request.session['email'] = ret_val.email
-            admin = check_user_is_event_admin(ret_val)
-            return render(request, 'events/index.html', {'user': ret_val, 'events': events, 'admin': admin})
+            return render(request, 'events/index1.html', {'user': ret_val, 'events': events})
         else:
             err = str(ret_val)
             return render(request, 'events/login.html', {'err': err})
@@ -74,7 +74,7 @@ def login(request):
         if user:
             admin = check_user_is_event_admin(user)
             logger.info('User %s logged in' % user.username)
-            return render(request, 'events/index.html', {'events': events, 'user': user, 'admin': admin})
+            return render(request, 'events/index1.html', {'events': events, 'user': user, 'admin': admin})
         else:
             return render(request, 'events/login.html', {'user': create_user(request)})
 
@@ -177,14 +177,23 @@ def new_user(request):
         return render(request, 'events/new_user.html', {'err': '', 'user': None})
 
 
-def index(request):
-    events = Event.objects.all()
+def list_events(request):
+    events = Event.objects.all().order_by('event_date')
     user = create_user(request)
-    admin = check_user_is_event_admin(user)
+    if user:
+        return render(request, 'events/index1.html',
+                      {'events': events, 'user': user})
+    else:
+        return render(request, 'events/login.html', {'err': 'Session expired. Please login again'})
 
+
+def index(request, event_id):
+    event = Event.objects.get(id=event_id)
+    user = create_user(request)
+    admin = check_user_is_event_admin(user, event_id)
     if user:
         return render(request, 'events/index.html',
-                      {'events': events, 'user': user, 'admin': admin, 'now': timezone.now()})
+                      {'event': event, 'user': user, 'admin': admin, 'now': timezone.now()})
     else:
         return render(request, 'events/login.html', {'err': 'Session expired. Please login again'})
 
@@ -261,10 +270,10 @@ def check_deletable(event_date):
 
 def register(request, event_id):
     event: Event = Event.objects.get(pk=event_id)
-    print('registering for event %s' % event.event_name)
+    logger.debug('registering for event %s' % event.event_name)
     user: Login = create_user(request)
     if not user:
-        print('request method is %s' % request.method)
+        logger.debug('request method is %s' % request.method)
         return render(request, 'events/new_user.html', {'err': "User not registered"})
     if request.POST:
         form = RegistrationForm(request.POST)
@@ -278,16 +287,16 @@ def register(request, event_id):
                 reg = Registration.objects.get(email=email_id)
                 context = {'user': user, 'registration': reg, 'event': event}
                 logger.info('Registered new participant %s for event %s ' % (user.username, event.event_name))
-                print('Registered new participant %s for event %s ' % (user.username, event.event_name))
+                logger.debug('Registered new participant %s for event %s ' % (user.username, event.event_name))
                 return render(request, 'events/reg_confirmation.html', context)
             else:
                 err = 'Either dates are not valid or number of guests or number of days is invalid.'
                 logger.error(err)
-                print('>>>>>>>>>>>>>>>>>>>>' + err)
+                logger.debug('>>>>>>>>>>>>>>>>>>>>' + err)
                 context = {'user': create_user(request), 'form': form, 'event': event, 'err': err}
                 return render(request, 'events/registration.html', context)
         else:
-            print(form.errors)
+            logger.debug(form.errors)
             raise Http404('Invalid form')
 
     else:
@@ -387,10 +396,8 @@ def get_event(event_id):
 def upload(request, event_id):
     login_ = create_user(request)
     event = Event.objects.get(pk=event_id)
-    print(event)
     if request.POST:
         form = FileUploadForm(request.POST, request.FILES)
-        print(form)
         files = request.FILES.getlist('files')
         if form.is_valid():
             for f in files:
@@ -398,6 +405,7 @@ def upload(request, event_id):
                 file.file_url = f
                 file.event = event
                 file.save()
+                logger.debug('Media %s saved '% str(file.file_url))
             return render(request, 'events/upload_success.html', {'user': login_})
         else:
             logger.error(form.errors)

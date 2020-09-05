@@ -1,20 +1,18 @@
 {% extends 'events/base.html' %}
 {% block title %} Index {% endblock %}
 {% block content %}
-    <div class="grid-container">
+   <div style="text-align: center;margin-top: 50px">
+   <p style="background-color: #b3d7ff;">
+       click on the event you want to register or view.
+   </p>
+   <table class="table-striped" style="display: inline-block">
+       {%  for event in events %}
+       <tr>
+           <td><a href="{% url 'events:index' event.id %}">{{ event.event_name }}</a> </td>
+       </tr>
+       {% endfor %}
+   </table>
+   </div>
 
-     <div class="grid-item">left
-        <div class="reverse-title"><b>Forthcoming events</b>
-            <span style="margin-left: 50%"><a href="{% url 'events:upload' user.id %}">Upload Media</a></span>|
-        <span><a href="{% url 'events:registrations' user.id %}">view registrations</a> </span>
-        </div>
-
-     </div>
-     <div class="grid-item">Right
-
-
-
-     </div>
-    </div>
 
 {% endblock %}

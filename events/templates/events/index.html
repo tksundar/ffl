@@ -2,9 +2,9 @@
 {% block title %} Index {% endblock %}
 {% block content %}
     <p style="margin-top: 50px"></p>
-    {% if events %}
+    {% if event %}
         <div style=";width: 100%;text-align: left">
-            <span>Events</span>
+            <span>{{ event.event_name }}</span>
         </div>
         <div style="text-align: center;">
             <table class="table-bordered" style="display: inline-flex;font-size: small">
@@ -23,8 +23,6 @@
                         <td>Cancellations</td>
                         </tr>
                     {% endif %}
-
-                {% for event in events %}
                     <tr>
                         {% if event.event_date < now %}
                             <td>{{ event.event_name }}</td>
@@ -45,7 +43,6 @@
                             <td><a href="{% url 'events:deleted_view' event.id %}">View</a></td>
                         {% endif %}
                     </tr>
-                {% endfor %}
             </table>
         </div>
     {% else %}
