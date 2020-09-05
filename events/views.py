@@ -198,8 +198,10 @@ def index(request):
     events = Event.objects.all()
     user = create_user(request)
     admin = check_user_is_event_admin(user)
+
     if user:
-        return render(request, 'events/index.html', {'events': events, 'user': user, 'admin': admin})
+        return render(request, 'events/index.html',
+                      {'events': events, 'user': user, 'admin': admin, 'now': timezone.now()})
     else:
         return render(request, 'events/login.html', {'err': 'Session expired. Please login again'})
 

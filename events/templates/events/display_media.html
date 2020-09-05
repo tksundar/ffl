@@ -3,6 +3,7 @@
 {% load thumbnail %}
 {% block title %}Media-Thumbnail{% endblock %}
 {% block content %}
+    <p style="margin-top: 50px"></p>
     <div style="width: 100%">
     {% for id, im_url in files.items %}
         {% thumbnail im_url "200x200" crop="center" as im %}

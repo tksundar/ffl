@@ -10,14 +10,23 @@
     <title>{% block title %}<!-- -->{% endblock %}</title>
 </head>
 <body style="width: 100%;height: 100%">
-<table style="width: 100%;font-style: normal; font-size:
-    medium;background-color: #2196F3;color: white; text-align: right;">
+{%  block sidebar %}
+<div style="position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+        height: 20px;
+  {#height: 50px;#}
+  background-color: #2196F3;">
+<table style="width: 100%;font-size: medium;background-color: #2196F3;color: white; text-align: right;">
+<tr>
     <td><span style="margin-right: 2%">Events portal</span></td>
     </tr>
 
     {% if user %}
         <tr>
-            <td><
+            <td>
                 <span style="margin-right: 2%;font-size: small">
             <a href="{% url 'events:index' %}"><img src="{% static 'events/home.png' %}"></a>
              Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}" style="color: white">logout</a>
@@ -27,6 +36,9 @@
 
     {% endif %}
   </table>
+</div>
+{% endblock %}
+
 {#{% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}#}
 {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>

@@ -2,7 +2,8 @@
 {% block title %}Registrations{% endblock %}
 {% load static %}
 {% block content %}
-    <div style="width: 100%;background-color: #b3d7ff;text-align: right">
+    <p style="height: 30px"></p>
+    <div style="width: 100%;height: 25px;text-align: right;">
         <a href="{% url 'events:export_csv' 1 %}"><img src="{% static 'events/Excel-icon_25.png' %}"
                                                        alt="export to excel" data-toggle="tooltip"
         title="export to excel"></a>
@@ -12,16 +13,16 @@
         <tr style="background-color: dimgray;color: white">
             <td>First Name</td>
             <td>Last Name</td>
-            <td>Payment</td>
-            <td>Payment_Ref</td>
-            <td>Num Days</td>
-            <td>Num Guests</td>
-            <td>Arrival</td>
-            <td>Departure</td>
+            <td>Pmt</td>
+            <td>Pmt_Ref</td>
+            <td>Days</td>
+            <td>Guests</td>
+            <td>Arr</td>
+            <td>Dep</td>
             <td>Pickup</td>
-            <td>Travel Mode</td>
+            <td>Mode</td>
             <td>Extended</td>
-            <td>Special Req</td>
+            <td>Special</td>
             <td>Mobile</td>
         </tr>
             {% for reg in active_regs %}

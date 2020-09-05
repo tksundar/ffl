@@ -1,8 +1,9 @@
 {% extends 'events/base.html' %}
 {% block title %} Login {% endblock %}
 {% block content %}
+ <p style="margin-top: 30px"> </p>
         <div style="width: 100%">
-            <span style="text-align: left;margin-left: 2%">   Login </span>
+            <span style="text-align: left;margin-left: 2%;margin-top: 2%">   Login </span>
         </div>
         <div style="text-align: center">
             <form style="display: inline-block" action="{% url 'events:login' %}" method="post">

@@ -1,7 +1,8 @@
 {% extends 'events/base.html' %}
 {% load static %}{% block title %}Registrations{% endblock %}
 {% block content %}
-    <div  style="width: 100%;background-color: #b3d7ff;text-align: right;">
+    <p style="margin-top: 50px"></p>
+    <div  style="width: 100%;text-align: right;">
     <span>
         <a href="{% url 'events:export_csv' 2 %}"><img src="{% static 'events/Excel-icon_25.png' %}" alt="export to excel"
         data-toggle="tooltip"
