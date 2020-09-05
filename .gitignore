@@ -19,6 +19,5 @@
 /templates/*
 /log/*
 /venv/*
-/events/migrations/*
 .idea/*
 

@@ -1,5 +1,6 @@
 from django import forms
-from .models import File_uploads, Event, Registration
+
+from .models import Event
 
 
 class EventsDateInput(forms.DateTimeInput):
@@ -25,15 +26,12 @@ class RegistrationForm(forms.Form):
     special_req = forms.CharField(widget=forms.TextInput)
 
 
-#
 class FileUploadForm(forms.Form):
-    ev = Event.objects.all()
-    choices = []
-    for e in ev:
-        t = (e.event_name, e.event_name)
-        choices.append(t)
-    event = forms.ChoiceField(choices=choices, widget=forms.Select)
-    file_url = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    event = forms.HiddenInput
+    files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+
+
 
 # class FileUploadForm(forms.ModelForm):
 #     class Meta:

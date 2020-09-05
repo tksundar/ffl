@@ -1,14 +1,19 @@
 {% extends 'events/base.html' %}
 {% block title %} Upload {% endblock %}
 {% block content %}
-        <div class="reverse-title"><b>Upload Media</b></div>
-    <div style="margin-left: 10%">
-      <form method="POST" action="{% url 'events:upload' user.id %}" enctype="multipart/form-data">
+    <p style="margin-top: 50px"></p>
+        <div style="width: 100%;text-align: center;background-color: #b3d7ff">
+           Upload Media
+        </div>
+    <div style="margin-left: 5%">Uploading media for event {{ event.event_name }}</div>
+    <p></p>
+    <div style="text-align: left;font-size: small">
+      <form style="margin-left: 5%" method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table>
         {% csrf_token %}
         {{ form.as_table }}
-              </table>
-        <button style="margin-left: 7%" type="submit" class="button">Save</button>
+          </table>
+        <button style="display: inline-block;margin-left: 7%" type="submit" class="button">Save</button>
     </form>
     </div>
 {% endblock %}

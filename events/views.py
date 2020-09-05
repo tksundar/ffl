@@ -19,10 +19,10 @@ logger = logging.getLogger('ffl.views')
 
 
 def check_if_password_change(request):
-    # this is a temp password. Return change password page
+    # if this is a temp password. Return change password page.Temp passwords are 5 chars long
     _pwd = request.POST['pwd']
     if len(_pwd) != 5:
-        return
+        return False
     try:
         Login.objects.get(temp_password__exact=_pwd)
         return render(request, 'events/change_password.html', {'user', None})
@@ -38,34 +38,62 @@ def check_user_is_event_admin(user):
         return None
 
 
-def login(request):
-    _login = None
-    user: Login = create_user(request)
-    events = Event.objects.all().order_by('event_date')
-    admin = None
-    if user:
-        admin = check_user_is_event_admin(user)
-        logger.info('User %s logged in' % user.username)
-        return render(request, 'events/index.html', {'events': events, 'user': user, 'admin': admin})
-    if request.POST:
-        email = request.POST['email']
-        try:
-            _login = Login.objects.get(email__exact=email)
-        except Login.DoesNotExist:
-            return render(request, 'events/new_user.html', {'err': ' Email not recognized. Please register'})
+def check_login(request):
+    email = request.POST['email']
+    try:
+        _login = Login.objects.get(email__exact=email)
         _pwd = request.POST['pwd']
         check_if_password_change(request)
         pwd = _login.password
-        if check_password(_pwd, pwd):
-            request.session['username'] = _login.username
-            request.session['email'] = _login.email
-            admin = check_user_is_event_admin(_login)
-            return render(request, 'events/index.html', {'user': _login, 'events': events, 'admin': admin})
+        logger.debug('checking password')
+        if not check_password(_pwd, pwd):
+            ret_val = 'invalid password'
         else:
-            return render(request, 'events/login.html', {'err': 'invalid password'})
+            ret_val = _login
+    except Login.DoesNotExist:
+        ret_val = 'Email not recognized. Please register'
+    return ret_val
 
+
+def login(request):
+    events = Event.objects.all().order_by('event_date')
+    logger.debug('retrieved events %s' % events)
+    if request.POST:
+        # logger.debug('login attempt with email %s' % email)
+        # print('login attempt with email %s' % email)
+        # _login = None
+        # try:
+        #     _login = Login.objects.get(email__exact=email)
+        #     logger.debug('Found logged in user %s' % email)
+        #     print('Found logged in email %s' % email)
+        # except Login.DoesNotExist:
+        #     logger.error('User not logged in %s' % email)
+        #     print('User not logged in %s' % email)
+        #     return render(request, 'events/new_user.html', {'err': 'Email not recognized. Please register'})
+        # _pwd = request.POST['pwd']
+        # check_if_password_change(request)
+        # pwd = _login.password
+        # logger.debug('checking password')
+        # print('checking password')
+        # if check_password(_pwd, pwd):
+        ret_val = check_login(request)
+        if isinstance(ret_val, Login):
+            request.session['username'] = ret_val.username
+            request.session['email'] = ret_val.email
+            admin = check_user_is_event_admin(ret_val)
+            return render(request, 'events/index.html', {'user': ret_val, 'events': events, 'admin': admin})
+        else:
+            err = str(ret_val)
+            return render(request, 'events/login.html', {'err': err})
     else:
-        return render(request, 'events/login.html', {'user': create_user(request)})
+        _login = None
+        user: Login = create_user(request)
+        if user:
+            admin = check_user_is_event_admin(user)
+            logger.info('User %s logged in' % user.username)
+            return render(request, 'events/index.html', {'events': events, 'user': user, 'admin': admin})
+        else:
+            return render(request, 'events/login.html', {'user': create_user(request)})
 
 
 def create_new_password():
@@ -127,24 +155,21 @@ def validate_new_user(request):
     username = str(request.POST['username']).strip()
     pwd = str(request.POST['pwd']).strip()
     pwd1 = str(request.POST['pwd1']).strip()
-    err = None
+
     if login_present(request, username, email_id):
-        err = 'Either username or password is taken'
+        return 'Either username or password is taken'
 
     if len(username) < 3:
-        err = 'Valid username with 3 or more characters required'
+        return 'Valid username with 3 or more characters required'
 
-    if len(email_id) < 5:
-        err = 'Valid email with 5 or more characters required'
-
-    if pwd != pwd1:
-        err = 'password and confirm password do not match'
+    if len(email_id) < 8:
+        return 'Valid email with 8 or more characters required'
 
     if len(pwd) < 6:
-        err = 'password must have 6 or more characters'
+        return 'password must have 6 or more characters'
 
-    if err:
-        return err
+    if pwd != pwd1:
+        return 'password and confirm password do not match'
 
     return email_id, username, pwd
 
@@ -153,6 +178,7 @@ def new_user(request):
     if request.POST:
         val = validate_new_user(request)
         if isinstance(val, str):
+            logger.error('error creating new user <%s>' % str(val))
             return render(request, 'events/new_user.html', {'err': val, 'user': None})
         email_id, username, pwd = val
         _login = Login()
@@ -160,9 +186,9 @@ def new_user(request):
         _login.password = make_password(pwd)
         _login.username = username
         _login.save()
-        logger.info('New User %s registered ' % _login.username)
+        logger.debug('New User %s registered ' % _login.username)
         request.session['email'] = _login.email
-        request.session['user'] = _login.username
+        request.session['username'] = _login.username
         return render(request, 'events/confirm.html', {'user': _login})
     else:
         return render(request, 'events/new_user.html', {'err': '', 'user': None})
@@ -172,8 +198,10 @@ def index(request):
     events = Event.objects.all()
     user = create_user(request)
     admin = check_user_is_event_admin(user)
+
     if user:
-        return render(request, 'events/index.html', {'events': events, 'user': user, 'admin': admin})
+        return render(request, 'events/index.html',
+                      {'events': events, 'user': user, 'admin': admin, 'now': timezone.now()})
     else:
         return render(request, 'events/login.html', {'err': 'Session expired. Please login again'})
 
@@ -183,7 +211,6 @@ def set_initial(reg_form, event, email):
         'event': event.event_name,
         'num_of_guests': '1',
         'num_of_days': '2',
-        'arrival_date': event.event_date,
         'email': email,
         'special_req': 'None'
     }
@@ -251,11 +278,12 @@ def check_deletable(event_date):
 
 def register(request, event_id):
     event: Event = Event.objects.get(pk=event_id)
+    print('registering for event %s' % event.event_name)
     user: Login = create_user(request)
     if not user:
+        print('request method is %s' % request.method)
         return render(request, 'events/new_user.html', {'err': "User not registered"})
     if request.POST:
-        logger.debug('Request is GET')
         form = RegistrationForm(request.POST)
         if form.is_valid():
             email_id = request.session.get('email')
@@ -267,14 +295,21 @@ def register(request, event_id):
                 reg = Registration.objects.get(email=email_id)
                 context = {'user': user, 'registration': reg, 'event': event}
                 logger.info('Registered new participant %s for event %s ' % (user.username, event.event_name))
+                print('Registered new participant %s for event %s ' % (user.username, event.event_name))
                 return render(request, 'events/reg_confirmation.html', context)
             else:
                 err = 'Either dates are not valid or number of guests or number of days is invalid.'
+                logger.error(err)
+                print('>>>>>>>>>>>>>>>>>>>>' + err)
                 context = {'user': create_user(request), 'form': form, 'event': event, 'err': err}
                 return render(request, 'events/registration.html', context)
+        else:
+            print(form.errors)
+            raise Http404('Invalid form')
+
     else:
+        logger.debug('Request is GET')
         try:
-            logger.debug('Request is GET')
             registration = Registration.objects.get(email__exact=user.email)
             deletable = check_deletable(event.event_date)
             context = {'registration': registration,
@@ -288,7 +323,7 @@ def register(request, event_id):
                 context['event'] = event
                 return render(request, 'events/detail.html', context)
         except Registration.DoesNotExist:
-            reg_form = RegistrationForm()
+            reg_form = RegistrationForm(initial={'arrival_date': event.event_date})
             set_initial(reg_form, event, user.email)
             context = {'user': create_user(request), 'form': reg_form, 'event': event}
             return render(request, 'events/registration.html', context)
@@ -341,9 +376,9 @@ def delete(request, reg_id):
     return render(request, 'events/delete_confirmation.html', context)
 
 
-def deleted_view(request, user_id):
-    login_ = Login.objects.get(pk=user_id)
-    deleted = Registration.objects.filter(is_deleted='Yes')
+def deleted_view(request, event_id):
+    login_ = create_user(request)
+    deleted = Registration.objects.filter(is_deleted='Yes', event_id=event_id)
     return render(request, 'events/deleted_regs.html', {'deleted': deleted, 'user': login_})
 
 
@@ -359,41 +394,46 @@ def stats(request, event_id):
     return render(request, 'events/stats.html', context)
 
 
-def get_event(event_name):
+def get_event(event_id):
     try:
-        return Event.objects.get(event_name__exact=event_name)
+        return Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
         return None
 
 
-def upload(request, user_id):
-    login_ = Login.objects.get(pk=user_id)
+def upload(request, event_id):
+    login_ = create_user(request)
+    event = Event.objects.get(pk=event_id)
+    print(event)
     if request.POST:
         form = FileUploadForm(request.POST, request.FILES)
-        files = request.FILES.getlist('file_url')
-        event_name = request.POST['event']
-        event = get_event(event_name)
+        print(form)
+        files = request.FILES.getlist('files')
         if form.is_valid():
             for f in files:
                 file: File_uploads = File_uploads()
                 file.file_url = f
                 file.event = event
                 file.save()
-        return render(request, 'events/upload_success.html', {'user': login_})
+            return render(request, 'events/upload_success.html', {'user': login_})
+        else:
+            logger.error(form.errors)
+            raise Http404('Upload failed.Contact administrator')
     else:
-        form = FileUploadForm()
+        form = FileUploadForm(initial={'event': event.event_name})
+        logger.debug(form)
         return render(request, 'events/upload_media.html',
-                      {'form': form, 'user': login_})
+                      {'form': form, 'user': login_, 'event': event})
 
 
-def registrations(request, user_id):
+def registrations(request, event_id):
     login_ = create_user(request)
-    active_regs = Registration.objects.exclude(is_deleted='Yes')
+    active_regs = Registration.objects.filter(is_deleted='No', event_id=event_id)
     return render(request, 'events/registrations.html', {'user': login_, 'active_regs': active_regs})
 
 
-def display_media(request):
-    uploaded_files = File_uploads.objects.all()
+def display_media(request, event_id):
+    uploaded_files = File_uploads.objects.filter(event_id=event_id)
     file_dict = {}
     for file in uploaded_files:
         file_dict[file.id] = file.file_url
@@ -413,7 +453,7 @@ def show_media(request, image_id):
     return render(request, 'events/show_media.html', context)
 
 
-def delete_media(request):
+def delete_media(request, event_id):
     files = File_uploads.objects.all()
     for file in files:
         file.delete()

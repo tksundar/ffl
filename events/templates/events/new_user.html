@@ -6,11 +6,12 @@
 {#    <div class="banner-right">#}
 {#        <h5>REC 76-80 events Portal</h5>#}
 {#    </div>#}
+    <p style="margin-top: 50px"></p>
     <div>
-        <div class="reverse-title"><b>Register</b></div>
+        <div style="background-color: #b3d7ff;"><b>Register</b></div>
         <p style="color: #ff0000">{{ err }}</p>
-        <div class="center-form">
-            <form class="center-form" name="new_user_form" action="{% url 'events:new_user' %}"
+        <div style="text-align: center">
+            <form style="display: inline-block" name="new_user_form" action="{% url 'events:new_user' %}"
                   method="post">
                 {% csrf_token %}
                 <table>

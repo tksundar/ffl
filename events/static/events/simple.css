@@ -1,14 +1,10 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-}
+
 .banner-right {
-    margin: auto;
     color: white;
     text-align: right;
     background: #2196F3;
     padding: 10px;
+    font-size: 30px;
 }
 
 .reverse-title{
@@ -20,21 +16,21 @@
     padding: 10px;
 }
 .center-form {
-    width: 70%;
-    height: 60%;
+    /*width: 70%;*/
+    /*height: 60%;*/
     text-align: center;
     padding: 10px;
     margin: auto}
 .center-table-form{
-     width: 70%;
-     height: 60%;
+     /*width: 70%;*/
+     /*height: 60%;*/
      padding: 10px;
      margin: 20%}
 
 
 .grid-container {
   display: grid;
-    width: 100%;
+    /*width: 100%;*/
   grid-template-columns: auto auto auto;
   background-color: #2196F3;
   /*padding: 10px;*/
@@ -46,5 +42,5 @@
 
     /*padding: 20px;*/
     font-size: 15px;
-    width: 100%;
+    /*width: 100%;*/
 }

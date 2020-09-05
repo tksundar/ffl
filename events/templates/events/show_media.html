@@ -1,12 +1,6 @@
 {% extends 'events/base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-
-{#   {% for id, im_url in files.items %}#}
-{#        {% thumbnail im_url "600x600" crop="center" as im %}#}
-{#                <img src="{{ im.url }}" height="{{ im.height }}" width="{{ im.width }}" alt="Image not found">#}
-{#        {% endthumbnail %}#}
-{#    {% endfor %}#}
-    <img src="{{ file }}">
-
+    <p style="margin-top: 50px"></p>
+    <img src="{{ file }}" style="height: 100%; width: 100%">
 {% endblock %}

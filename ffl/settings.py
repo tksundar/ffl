@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# SECRET_KEY = 'vlg4y4x6q#w&$ssj--l1sf2+j#a^p-j!#!fvw7(l*a43crc+wf'
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'vlg4y4x6q#w&$ssj--l1sf2+j#a^p-j!#!fvw7(l*a43crc+wf'
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 if os.getenv('DEBUG') == 'True':
     DEBUG = True
     THUMBNAIL_DEBUG = True
@@ -34,8 +34,11 @@ else:
     THUMBNAIL_DEBUG = False
     FFL_DEBUG = False
 
-print('FFL_DEBUG  is set to %s' % FFL_DEBUG)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.100']
+
+ALLOWED_HOSTS = ['ec2-13-232-233-180.ap-south-1.compute.amazonaws.com']
+
+if os.environ.get('DEBUG'):
+    ALLOWED_HOSTS += ['localhost']
 
 # Application definition
 
@@ -137,6 +140,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -153,11 +157,11 @@ LOGGING = {
             'formatter': 'simple',
 
         },
-        'file-ffl': {
+        'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
-            'filename': 'c:/dev1/ffl/log/debug.log'
+            'filename': '/home/ubuntu/dev/ffl/log/debug.log'
 
         }
     },
@@ -168,10 +172,14 @@ LOGGING = {
             'propagate': True
         },
         'ffl': {
-            'handlers': ['file-ffl'],
+            'handlers': ['stream', 'file'],
             'level': 'INFO',
             'propagate': True
-        }
+        },
+        'root': {
+            'handlers': ('stream', 'file'),
+            'level': 'DEBUG'}
 
     }
 }
+print('DEBUG is set to %s' % FFL_DEBUG)

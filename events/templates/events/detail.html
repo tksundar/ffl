@@ -1,29 +1,26 @@
 {% extends 'events/base.html' %}
 {% block title %} Event Registration{% endblock %}
 {% block content %}
-    {#    <div class="banner-right">#}
-    {#        <h5>REC 76-80 events Portal</h5>#}
-    {#        <div style="color: white;font-style: normal"> {{ username }} logged in</div>#}
-    {#    </div>#}
+    <p style="margin-top: 50px"></p>
     {% if not message %}
-        <div class="grid-container" style="width: 100%">
-            <span class="grid-item" style="text-align: left; padding-left: 5%;">Already registered!. Details are given below.</span>
-            <span class="grid-item"></span>
-            <span class="grid-item" style="text-align: right; padding-right: 5%;">
-            <a href="{% url 'events:edit' registration.id %}">Edit</a>&nbsp;<span style="color:#adb5bd">|</span>
+        <div style=" width:100%;background-color: #b3d7ff;text-align: center">
+            <span>Already registered!. Details are given below.</span>
+            <span>
+            <a href="{% url 'events:edit' registration.id %}">Edit</a>&nbsp;
+                <span style="color:#adb5bd">|</span>
                 {% if deletable %}
                     <a href="{% url 'events:delete' registration.id %}"
                        onclick="return confirm('Are you sure?')">Delete</a>
                 {% else %}
                     {#    <span class="grid-item" style="text-align: right; padding-right: 5%;"> <a href="{% url 'events:delete' registration.id %}" onclick="return confirm('Are you sure?')">Delete</a></span>#}
-                    <span data-toggle="tooltip" title="Event too close to delete.Contact event managers">Delete</span>
+                    <span style="text-align: right" data-toggle="tooltip" title="Event too close to delete.Contact event managers">Delete</span>
                 {% endif %}
         </span>
         </div>
         <p class="p"></p>
         {% if attributes %}
-            <div style="margin-left: 10%">
-                <table class="table-striped">
+            <div style="text-align: center">
+                <table class="table-striped" style="font-size: small;display: inline-block">
                     {% for field, value in attributes.items %}
                         <tr>
                             <td>{{ field }}</td>

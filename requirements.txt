@@ -2,7 +2,6 @@ asgiref==3.2.10
 Django==3.1
 django-session-timeout==0.1.0
 django-tables2==2.3.1
-mod-wsgi==4.7.1
 Pillow==7.2.0
 pytz==2020.1
 six==1.15.0

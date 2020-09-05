@@ -1,23 +1,23 @@
 {% extends 'events/base.html' %}
 {% block title %} Event Registration{% endblock %}
 {% block content %}
-{#    <div class="banner-right">#}
-{#        <h5>REC 76-80 events Portal</h5>#}
-{#        <div style="color: white;font-style: normal"> {{ username }} logged in</div>#}
-{#    </div>#}
-    <div class="reverse-title">Edit your registration for {{ event_name }} </div>
-
-    <div style="margin-left: 10%">
-        <form action="{% url 'events:edit' registration.id %}" method="post">
+<p style="margin-top: 50px"></p>
+    <div style="width: 100%;background-color: #b3d7ff;text-align: left;">
+        <span style="margin-left: 10%;">Edit your registration for {{ event.event_name }} </span>
+    </div>
+    <div style="width:100%;margin-left: 10%;font-size: small">
+        <form style="font-size: smaller" action="{% url 'events:edit' registration.id %}" method="post">
             <table>
                 {% csrf_token %}
                 {{ form.as_table }}
             </table>
-            <span style="margin-left: 13%">
+            <span style="margin-left: 15%">
                 <input type="submit" value="Submit" class="button">
             </span>
         </form>
     </div>
+
+
 
 
 {% endblock %}
