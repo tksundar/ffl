@@ -33,7 +33,7 @@ def check_if_password_change(request):
 def check_user_is_event_admin(user):
     try:
         if user:
-            return Event_Admin.objects.get(admin__exact=user.username)
+            return Event_Admin.objects.get(admin__in=user.username)
     except Event_Admin.DoesNotExist:
         return None
 
@@ -59,23 +59,6 @@ def login(request):
     events = Event.objects.all().order_by('event_date')
     logger.debug('retrieved events %s' % events)
     if request.POST:
-        # logger.debug('login attempt with email %s' % email)
-        # print('login attempt with email %s' % email)
-        # _login = None
-        # try:
-        #     _login = Login.objects.get(email__exact=email)
-        #     logger.debug('Found logged in user %s' % email)
-        #     print('Found logged in email %s' % email)
-        # except Login.DoesNotExist:
-        #     logger.error('User not logged in %s' % email)
-        #     print('User not logged in %s' % email)
-        #     return render(request, 'events/new_user.html', {'err': 'Email not recognized. Please register'})
-        # _pwd = request.POST['pwd']
-        # check_if_password_change(request)
-        # pwd = _login.password
-        # logger.debug('checking password')
-        # print('checking password')
-        # if check_password(_pwd, pwd):
         ret_val = check_login(request)
         if isinstance(ret_val, Login):
             request.session['username'] = ret_val.username
