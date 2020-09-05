@@ -5,6 +5,11 @@
         <div style="width: 100%;text-align: center;background-color: #b3d7ff">
            Upload Media
         </div>
+    {%  if msg %}
+    <p>
+    Media Uploaded successfully.
+    </p>
+    {%  endif %}
     <div style="margin-left: 5%">Uploading media for event {{ event.event_name }}</div>
     <p></p>
     <div style="text-align: left;font-size: small">

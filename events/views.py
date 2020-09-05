@@ -396,6 +396,7 @@ def get_event(event_id):
 def upload(request, event_id):
     login_ = create_user(request)
     event = Event.objects.get(pk=event_id)
+    msg = "Media Uploaded Successfully"
     if request.POST:
         form = FileUploadForm(request.POST, request.FILES)
         files = request.FILES.getlist('files')
@@ -405,8 +406,10 @@ def upload(request, event_id):
                 file.file_url = f
                 file.event = event
                 file.save()
-                logger.debug('Media %s saved '% str(file.file_url))
-            return render(request, 'events/upload_success.html', {'user': login_})
+                logger.debug('Media %s saved ' % str(file.file_url))
+                form = FileUploadForm(initial={'event': event.event_name})
+            return render(request, 'events/upload_media.html', {'user': login_, 'form':form,
+                                                                'event': event, 'msg': msg})
         else:
             logger.error(form.errors)
             raise Http404('Upload failed.Contact administrator')
