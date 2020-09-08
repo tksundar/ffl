@@ -1,9 +1,9 @@
 {% extends 'events/base.html' %}
 {% block title %} Event Registration{% endblock %}
 {% block content %}
-    <p style="margin-top: 50px"></p>
+{#    <p style="margin-top: 50px"></p>#}
     {% if not message %}
-        <div style=" width:100%;background-color: #b3d7ff;text-align: center">
+        <div class="container-fluid" style=" width:100%;background-color: #b3d7ff;"> <!--style=" width:100%;background-color: #b3d7ff;text-align: center"-->
             <span>Already registered!. Details are given below.</span>
             <span>
             <a href="{% url 'events:edit' registration.id %}">Edit</a>&nbsp;
@@ -19,8 +19,8 @@
         </div>
         <p class="p"></p>
         {% if attributes %}
-            <div style="text-align: center">
-                <table class="table-striped" style="font-size: small;display: inline-block">
+            <div class="container-fluid"  > <!-- style="text-align: center" -->
+                <table class="table-striped table-responsive" >
                     {% for field, value in attributes.items %}
                         <tr>
                             <td>{{ field }}</td>
