@@ -64,17 +64,17 @@ def login(request):
         if isinstance(ret_val, Login):
             request.session['username'] = ret_val.username
             request.session['email'] = ret_val.email
-            return render(request, 'events/index1.html', {'user': ret_val, 'events': events})
+            return render(request, 'events/index.html', {'user': ret_val, 'events': events})
         else:
             err = str(ret_val)
-            return render(request, 'events/login.html', {'err': err})
+            return render(request, 'events/login.html', {'user': None, 'err': err})
     else:
         _login = None
         user: Login = create_user(request)
         if user:
-            admin = check_user_is_event_admin(user)
+            # admin = check_user_is_event_admin(user,)
             logger.info('User %s logged in' % user.username)
-            return render(request, 'events/index1.html', {'events': events, 'user': user, 'admin': admin})
+            return render(request, 'events/index.html', {'events': events, 'user': user})
         else:
             return render(request, 'events/login.html', {'user': create_user(request)})
 
@@ -181,7 +181,7 @@ def list_events(request):
     events = Event.objects.all().order_by('event_date')
     user = create_user(request)
     if user:
-        return render(request, 'events/index1.html',
+        return render(request, 'events/index.html',
                       {'events': events, 'user': user})
     else:
         return render(request, 'events/login.html', {'err': 'Session expired. Please login again'})
@@ -192,7 +192,7 @@ def index(request, event_id):
     user = create_user(request)
     admin = check_user_is_event_admin(user, event_id)
     if user:
-        return render(request, 'events/index.html',
+        return render(request, 'events/event_detail.html',
                       {'event': event, 'user': user, 'admin': admin, 'now': timezone.now()})
     else:
         return render(request, 'events/login.html', {'err': 'Session expired. Please login again'})
@@ -408,7 +408,7 @@ def upload(request, event_id):
                 file.save()
                 logger.debug('Media %s saved ' % str(file.file_url))
                 form = FileUploadForm(initial={'event': event.event_name})
-            return render(request, 'events/upload_media.html', {'user': login_, 'form':form,
+            return render(request, 'events/upload_media.html', {'user': login_, 'form': form,
                                                                 'event': event, 'msg': msg})
         else:
             logger.error(form.errors)
@@ -422,8 +422,10 @@ def upload(request, event_id):
 
 def registrations(request, event_id):
     login_ = create_user(request)
-    active_regs = Registration.objects.filter(is_deleted='No', event_id=event_id)
-    return render(request, 'events/registrations.html', {'user': login_, 'active_regs': active_regs})
+    if check_user_is_event_admin(login_, event_id=event_id):
+        active_regs = Registration.objects.filter(is_deleted='No', event_id=event_id)
+        return render(request, 'events/registrations.html', {'user': login_, 'active_regs': active_regs})
+    raise Http404('File not found')
 
 
 def display_media(request, event_id):

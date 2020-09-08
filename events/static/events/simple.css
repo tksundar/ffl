@@ -2,18 +2,27 @@
 .banner-right {
     color: white;
     text-align: right;
-    background: #2196F3;
-    padding: 10px;
-    font-size: 30px;
+    background-color: #2196F3;
 }
 
+.fixed-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 30px;
+    margin-right: 2%;
+    background: #b3d7ff;
+
+}
 .reverse-title{
-    margin: auto;
     width: 100%;
     background: #b3d7ff;
     color: #054570;
-    text-align: left;
-    padding: 10px;
+    margin-right: 2%;
+
 }
 .center-form {
     /*width: 70%;*/

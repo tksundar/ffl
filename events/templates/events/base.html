@@ -1,45 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=No">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
     <script type="application/javascript" src="{% static 'events/validations.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'events/simple.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'events/bootstrap.css' %}">
-
     <title>{% block title %}<!-- -->{% endblock %}</title>
 </head>
 <body style="width: 100%;height: 100%">
-{%  block sidebar %}
-<div style="position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  width: 100%;
-        height: 20px;
-  {#height: 50px;#}
-  background-color: #2196F3;">
-<table style="width: 100%;font-size: medium;background-color: #2196F3;color: white; text-align: right;">
-<tr>
-    <td><span style="margin-right: 2%">Events portal</span></td>
-    </tr>
-
-    {% if user %}
-        <tr>
-            <td>
-                <span style="margin-right: 2%;font-size: small">
-            <a href="{% url 'events:list_events' %}"><img src="{% static 'events/home.png' %}"></a>
-             Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}" style="color: white">logout</a>
-        </span>
-            </td>
-        </tr>
-
-    {% endif %}
-  </table>
-</div>
+<div class="container'">
+{% block sidebar %}
+        {% if user and user.username  %}
+            <div class="row fixed-nav">
+                <div class="banner-right col-sm " style="font-size: medium;margin-right: 2%">Events Portal<br>
+                    <a href="{% url 'events:list_events' %}"><img src="{% static 'events/home.png' %}"></a>
+                    Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}"
+                                                          style="color: white">logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="row fixed-nav">
+                <div class="banner-right col-sm " style="font-size: medium;margin-right: 2%">Events Portal</div>
+            </div>
+        {% endif %}
 {% endblock %}
 
 {#{% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}#}
 {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+   </div>
 </body>
 </html>

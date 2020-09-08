@@ -1,52 +1,18 @@
 {% extends 'events/base.html' %}
 {% block title %} Index {% endblock %}
 {% block content %}
-    <p style="margin-top: 50px"></p>
-    {% if event %}
-        <div style=";width: 100%;text-align: left">
-            <span>{{ event.event_name }}</span>
-        </div>
-        <div style="text-align: center;">
-            <table class="table-bordered" style="display: inline-flex;font-size: small">
-                <tr style="font-size: larger;font-weight:revert;color:white;background-color: dimgray">
-                    <td>Name</td>
-                    <td>Venue</td>
-                    <td>Date</td>
-                    <td>Description</td>
-                    <td>Managers</td>
-                    <td>Details</td>
-                    <td>Stats</td>
-                    <td>Media</td>
-                    {% if admin %}
-                        <td>Media</td>
-                        <td>Registrations</td>
-                        <td>Cancellations</td>
-                        </tr>
-                    {% endif %}
-                    <tr>
-                        {% if event.event_date < now %}
-                            <td>{{ event.event_name }}</td>
-                        {% else %}
-                            <td data-toggle="tooltip" title="click to register"><a
-                                    href="{% url 'events:register' event.id %}">{{ event.event_name }}</a></td>
-                        {% endif %}
-                        <td>{{ event.event_venue }}</td>
-                        <td>{{ event.event_date }}</td>
-                        <td>{{ event.event_description }}</td>
-                        <td>{{ event.event_managers }}</td>
-                        <td><a href="{{ event.event_link }}">Details</a></td>
-                        <td><a href="{% url 'events:stats' event.id %}" target="_blank">registered friends</a></td>
-                        <td><a href="{% url 'events:display_media' event.id %}"> View </a></td>
-                        {% if admin %}
-                            <td><a href="{% url 'events:upload' event.id %}"> upload </a></td>
-                            <td><a href="{% url 'events:registrations' event.id %}">View</a></td>
-                            <td><a href="{% url 'events:deleted_view' event.id %}">View</a></td>
-                        {% endif %}
-                    </tr>
-            </table>
-        </div>
-    {% else %}
-        No events available
-    {% endif %}
+   <div style="text-align: center;">
+   <p style="background-color: #b3d7ff;">
+       click on the event you want to register or view.
+   </p>
+   <table class="table-striped" style="display: inline-block">
+       {%  for event in events %}
+       <tr>
+           <td><a href="{% url 'events:index' event.id %}">{{ event.event_name }}</a> </td>
+       </tr>
+       {% endfor %}
+   </table>
+   </div>
+
 
 {% endblock %}
