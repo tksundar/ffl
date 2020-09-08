@@ -488,7 +488,7 @@ def create_csv(request, columns_list, obj, filename):
 
 def logout(request):
     request.session.clear()
-    return render(request, 'events/login.html', {'user': None, 'err': 'You have been successfully logged out'})
+    return render(request, 'events/login.html', {'user': None})
 
 
 def register_again(request, event_id):
