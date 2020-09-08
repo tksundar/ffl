@@ -2,14 +2,14 @@
 {% block title %} Login {% endblock %}
 {% block content %}
     <p style="margin-top: 50px"></p>
-    <div class="container" style="width: 80% ;border-color:#005cbf;border-width: 2px;border-style: solid">
-        <div>
-            {% if not err %}
-                <span style="text-align: left;margin-top: 2%"><b>Login</b></span>
-            {% else %}
+    <div class="container-fluid" style="width: 80% ;border-color:#005cbf;border-width: 2px;border-style: solid;">
+
+        <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium">Login
+                 </div>
+           {%  if err %}
                 {{ err }}
             {% endif %}
-        </div>
+
         <p></p>
         <form action="{% url 'events:login' %}" method="post">
             {% csrf_token %}
