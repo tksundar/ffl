@@ -1,16 +1,15 @@
 {% extends 'events/base.html' %}
 {% load static %}{% block title %}Registrations{% endblock %}
 {% block content %}
-    <p style="margin-top: 50px"></p>
-    <div  style="width: 100%;text-align: right;">
+    <div  class="container" style="text-align: right;background-color: #b3d7ff">
     <span>
         <a href="{% url 'events:export_csv' 2 %}"><img src="{% static 'events/Excel-icon_25.png' %}" alt="export to excel"
         data-toggle="tooltip"
         title="export to excel"></a>
     </span>
     </div>
-    <div style="text-align: center" class="table-bordered">
-        <table class="table-striped" style="display: inline-block">
+    <div class="container">
+        <table class="table table-responsive" style="display: inline-block">
         <tr>
             <td>First Name</td>
             <td>Last Name</td>

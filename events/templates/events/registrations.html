@@ -2,15 +2,14 @@
 {% block title %}Registrations{% endblock %}
 {% load static %}
 {% block content %}
-{#    <p style="height: 30px"></p>#}
-    <div style="width: 100%;height: 25px;text-align: right;background-color: #9fcdff">
+    <div class="container-fluid" style="width: 100%;height: 25px;text-align: right;background-color: #9fcdff">
         <a href="{% url 'events:export_csv' 1 %}"><img src="{% static 'events/Excel-icon_25.png' %}"
                                                        alt="export to excel" data-toggle="tooltip"
         title="export to excel"></a>
     </div>
     <div class="container-fluid" >
         <table class="table-bordered table-striped table-responsive" style="display:inline-block;">
-        <tr style="background-color:#2196F3;color: white">
+        <tr style="background-color:#2196F3;color: white;text-align: center">
             <td>First Name</td>
             <td>Last Name</td>
             <td>Pmt</td>
@@ -33,8 +32,8 @@
                     <td>{{ reg.payment_ref }}</td>
                     <td>{{ reg.num_days }}</td>
                     <td>{{ reg.num_guests }}</td>
-                    <td>{{ reg.arrival_date }}</td>
-                    <td>{{ reg.departure_date }}</td>
+                    <td>{{ reg.arrival_date.date}}</td>
+                    <td>{{ reg.departure_date.date }}</td>
                     <td>{{ reg.pickup_reqd }}</td>
                     <td>{{ reg.mode_of_travel }}</td>
                     <td>{{ reg.extended_tour }}</td>
