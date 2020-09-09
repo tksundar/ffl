@@ -30,16 +30,16 @@
             </div>
         </form>
         <p></p>
-        <div>
-                <span style="text-align: right">
+        <div class="row">
+                <div class="col" style="text-align: left">
                     Forgot password?
                     <a href="{% url 'events:password_reset' %}">Reset Password </a>
-                </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               <span style="text-align: right">
+                </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p></p>
+               <div class="col" style="text-align: right">
                     New User?
                     <a href="{% url 'events:new_user' %}">Register </a>
-                </span>
+                </div>
         </div>
         </form>
     </div>
