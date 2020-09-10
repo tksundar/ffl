@@ -15,15 +15,15 @@
     {#    <div style="margin-left: 5%">Uploading media for event {{ event.event_name }}</div>#}
 
     <div
-         style=" width:70%;font-size: small;text-align:left;border-color: #0f6674;border-width: 2px;border-style: solid">
+         style=" width:100%;font-size: small;text-align:left;border-color: #0f6674;border-width: 2px;border-style: solid">
       <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium">Upload Media
                  </div>
-      <form style="margin-left: 5%" method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
+      <form style="margin-left: 40%" method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table class="table table-responsive">
         {% csrf_token %}
         {{ form.as_table }}
               </table>
-        <button style="display:inline-block;margin-left: 16%" type="submit" class="btn btn-primary">Save</button>
+        <button style="display:inline-block;margin-left: 13%" type="submit" class="btn btn-primary">Save</button>
       </form>
     <p></p>
     </div>
