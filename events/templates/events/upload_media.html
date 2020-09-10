@@ -1,25 +1,30 @@
 {% extends 'events/base.html' %}
 {% block title %} Upload {% endblock %}
 {% block content %}
-{#    <p style="margin-top: 50px"></p>#}
-        <div style="width: 100%;text-align: center;background-color: #b3d7ff">
-           Upload media for event {{ event.event_name }}
-        </div>
-    {%  if msg %}
-    <p>
-    Media Uploaded successfully.
-    </p>
-    {%  endif %}
-{#    <div style="margin-left: 5%">Uploading media for event {{ event.event_name }}</div>#}
+    {#    <p style="margin-top: 50px"></p>#}
+    <div style="width: 100%;text-align: center;background-color: #b3d7ff">
+        Upload media for event {{ event.event_name }}
+    </div>
+    {% if msg %}
+        <p>
+            Media Uploaded successfully.
+        </p>
+        {% else %}
+        <p></p>
+    {% endif %}
+    {#    <div style="margin-left: 5%">Uploading media for event {{ event.event_name }}</div>#}
 
-    <div class="container-fluid" style="text-align: left;font-size: small">
+    <div
+         style=" width:40%;font-size: small;text-align:left;border-color: #0f6674;border-width: 2px;border-style: solid">
+      <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium">Upload Media
+                 </div>
       <form style="margin-left: 5%" method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table class="table table-responsive">
         {% csrf_token %}
         {{ form.as_table }}
               </table>
-        <button style="display: inline-block;margin-left: 7%" type="submit" class="btn btn-primary">Save</button>
-
+        <button style="display:inline-block;margin-left: 16%" type="submit" class="btn btn-primary">Save</button>
       </form>
+    <p></p>
     </div>
 {% endblock %}

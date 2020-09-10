@@ -2,15 +2,16 @@
 {% block title %} Login {% endblock %}
 {% block content %}
     <p style="margin-top: 50px"></p>
-    <div class="container-fluid" style="width: 80% ;border-color:#005cbf;border-width: 2px;border-style: solid;">
+    <div style="width: 80% ;border-color:#005cbf;border-width: 2px;border-style: solid;">
 
-        <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium">Login
+        <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium;">Login
                  </div>
            {%  if err %}
                 {{ err }}
             {% endif %}
 
         <p></p>
+      <div style="margin-left: 2%">
         <form action="{% url 'events:login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -29,6 +30,7 @@
                 <span><button type="submit" class="btn btn-primary">Submit</button></span>
             </div>
         </form>
+          </div>
         <p></p>
         <div class="row">
                 <div class="col" style="text-align: left">
@@ -41,7 +43,7 @@
                     <a href="{% url 'events:new_user' %}">Register </a>
                 </div>
         </div>
-        </form>
+
     </div>
 
 
