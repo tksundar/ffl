@@ -18,7 +18,7 @@
          style=" width:100%;font-size: small;text-align:left;border-color: #0f6674;border-width: 2px;border-style: solid">
       <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium">Upload Media
                  </div>
-      <form style="margin-left: 40%" method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
+      <form style="margin-left: 20%" method="POST" action="{% url 'events:upload' event.id %}" enctype="multipart/form-data">
           <table class="table table-responsive">
         {% csrf_token %}
         {{ form.as_table }}
