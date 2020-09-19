@@ -2,14 +2,15 @@
 {% block title %}Registrations{% endblock %}
 {% load static %}
 {% block content %}
-    <div class="container-fluid" style="width: 100%;height: 25px;text-align: right;background-color: #9fcdff">
+    <div class="card">
+    <div class="" style="width: 100%;text-align: right;background-color: lightgray">
         <a href="{% url 'events:export_csv' 1 %}"><img src="{% static 'events/Excel-icon_25.png' %}"
                                                        alt="export to excel" data-toggle="tooltip"
         title="export to excel"></a>
     </div>
-    <div class="container-fluid" >
-        <table class="table-bordered table-striped table-responsive" style="display:inline-block;">
-        <tr style="background-color:#2196F3;color: white;text-align: center">
+    <div  >
+        <table class="table-bordered table-striped table-responsive" >
+        <tr style="background-color:grey;color: white;text-align: center;font-size: small">
             <td>First Name</td>
             <td>Last Name</td>
             <td>Pmt</td>
@@ -43,6 +44,6 @@
             {% endfor %}
 
         </table>
-
+</div>
     </div>
 {% endblock %}

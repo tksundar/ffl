@@ -9,25 +9,30 @@
     <title>{% block title %}<!-- -->{% endblock %}</title>
 </head>
 <body>
-<nav class="container-fluid navbar-fixed-top">
-{% block sidebar %}
-        {% if user and user.username  %}
-            <div class="row">
-                <div class="banner-right col-sm " style="font-size: medium;margin-right: 2%">Events Portal<br>
-                    <a href="{% url 'events:list_events' %}"><img src="{% static 'events/home.png' %}"></a>
-                    Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}"
-                                                          style="color: white">logout</a>
-                </div>
-            </div>
-        {% else %}
-            <div class="row">
-                <div class="banner-right col-sm " style="font-size: medium;margin-right: 2%">Events Portal</div>
-            </div>
-        {% endif %}
-{% endblock %}
-
-{#{% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}#}
-{% block content %}<!-- default content text (typically empty) -->{% endblock %}
-   </nav>
+<div class="card">
+    <div class="card-header">
+{#        <nav class="container-fluid>#}
+            {% block sidebar %}
+                {% if user and user.username %}
+                    <div class="row">
+                        <div class="banner-right col-sm " style="font-size: medium;margin-right: 2%">Events Portal<br>
+                            <a href="{% url 'events:list_events' %}"><img src="{% static 'events/home.png' %}"></a>
+                            Hi &nbsp;{{ user.username }}!&nbsp;<a href="{% url 'events:logout' %}"
+                                                                  style="color: white">logout</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        <div class="banner-right col-sm " style="font-size: medium;margin-right: 2%">Events Portal</div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+{#        </nav>#}
+    </div>
+    <div class="card-body">
+        {#{% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}#}
+        {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+    </div>
+</div>
 </body>
 </html>

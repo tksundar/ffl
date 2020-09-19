@@ -1,17 +1,17 @@
 {% extends 'events/base.html' %}
 {% block title %} Login {% endblock %}
 {% block content %}
-    <p style="margin-top: 50px"></p>
-    <div style="width: 80% ;border-color:#005cbf;border-width: 2px;border-style: solid;">
+{#    <p style="margin-top: 50px"></p>#}
+    <div style="width: 100% ;border-color:grey;border-width: 2px;border-style: solid;">
 
-        <div style="width: 100%; background-color:#0f6674;text-align: center;color:white;font-size: medium;">Login
+        <div style="width: 100%; background-color: grey;text-align: center;color:white;font-size: medium;">Login
                  </div>
            {%  if err %}
                 {{ err }}
             {% endif %}
 
         <p></p>
-      <div style="margin-left: 2%">
+      <div class="container">
         <form action="{% url 'events:login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">

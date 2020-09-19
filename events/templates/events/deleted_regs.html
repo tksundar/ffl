@@ -1,15 +1,16 @@
 {% extends 'events/base.html' %}
 {% load static %}{% block title %}Registrations{% endblock %}
 {% block content %}
-    <div  class="container" style="text-align: right;background-color: #b3d7ff">
+    <div class="card">
+    <div style="text-align: right;background-color: lightgray">
     <span>
         <a href="{% url 'events:export_csv' 2 %}"><img src="{% static 'events/Excel-icon_25.png' %}" alt="export to excel"
         data-toggle="tooltip"
         title="export to excel"></a>
     </span>
     </div>
-    <div class="container">
-        <table class="table table-responsive" style="display: inline-block">
+    <div>
+        <table class="table-responsive">
         <tr>
             <td>First Name</td>
             <td>Last Name</td>
@@ -43,5 +44,6 @@
             {% endfor %}
 
         </table>
+    </div>
     </div>
 {% endblock %}
