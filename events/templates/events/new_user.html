@@ -10,14 +10,14 @@
      <div style="width: 100%; background-color:grey;text-align: center;color:white;font-size: medium">Register
                  </div>
         <p style="color: #ff0000">{{ err }}</p>
-        <div style="text-align: left;">
+        <div class="container" style="text-align: left;">
                  <form action="{% url 'events:new_user' %}" method="post">
             {% csrf_token %}
                       <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="choose a username"
                 aria-describedby="usernameHelp">
-                          <small id="usernameHelp" class="form-text text-muted">The name will be used for loging in</small>
+                          <small id="usernameHelp" class="form-text text-muted">The name will appear on all screens</small>
 
             </div>
             <div class="form-group">
