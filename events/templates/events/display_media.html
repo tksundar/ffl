@@ -5,11 +5,11 @@
 {% block content %}
     <div class="container" >
     {% for id, im_url in files.items %}
-{#        {% thumbnail im_url "200x200" crop="center" as im %}#}
+        {% thumbnail im_url "200x200" crop="center" as im %}
             <a href="{% url 'events:show_media' id %}">
-                <img src="{{ im_url }}" height="200" width="200">
+                <img src="{{ im.url }}" height="{{ im.height }}" width="{{ im.width }}">
             </a></a>
-{#        {% endthumbnail %}#}
+        {% endthumbnail %}
     {% endfor %}
     </div>
 {% endblock %}

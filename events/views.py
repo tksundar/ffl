@@ -393,21 +393,44 @@ def get_event(event_id):
         return None
 
 
+msg_success = "Media Uploaded Successfully"
+msg_warning = ''
+msg = ''
+
+
 def upload(request, event_id):
+    global msg, msg_success, msg_warning
+    logger.debug('File upload request received')
     login_ = create_user(request)
     event = Event.objects.get(pk=event_id)
-    msg = "Media Uploaded Successfully"
     if request.POST:
+
         form = FileUploadForm(request.POST, request.FILES)
         files = request.FILES.getlist('files')
+        print('form is valid and file length = %s %s' % (str(form.is_valid()), len(files)))
+        global msg, msg_success, msg_warning
         if form.is_valid():
             for f in files:
                 file: File_uploads = File_uploads()
+                url = str(f)
+                if url.__contains__('mp4') or \
+                        url.__contains__('avi') or \
+                        url.__contains__('mov') or \
+                        url.__contains__('mpg') or \
+                        url.__contains__('mpeg'):
+                    logger.info('video file(s) is/are not saved')
+                    msg_warning = 'video file(s) is/are not saved'
+                    continue
                 file.file_url = f
                 file.event = event
                 file.save()
                 logger.debug('Media %s saved ' % str(file.file_url))
                 form = FileUploadForm(initial={'event': event.event_name})
+            logger.debug('message warning %s Length = %d' % (msg_warning, len(msg_warning)))
+            if len(msg_warning) > 0:
+                msg = msg_warning
+            else:
+                msg = msg_success
             return render(request, 'events/upload_media.html', {'user': login_, 'form': form,
                                                                 'event': event, 'msg': msg})
         else:
@@ -432,6 +455,9 @@ def display_media(request, event_id):
     uploaded_files = File_uploads.objects.filter(event_id=event_id)
     file_dict = {}
     for file in uploaded_files:
+        url = str(file.file_url)
+        if url.__contains__('mpg') or url.__contains__('avi') or url.__contains__('mov'):
+            continue
         file_dict[file.id] = file.file_url
     logger.info('Urls of media => ', file_dict)
     context = {'files': file_dict, 'user': create_user(request)}
